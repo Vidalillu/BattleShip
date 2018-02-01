@@ -1,0 +1,222 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url('../img/Battleship2.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    width: 100%;
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+#content h1 {
+    margin-top: 0px;
+    margin-bottom: 20px;
+    color: #d9d3d3;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 3px;
+    font-size: 2em;
+    text-shadow: 6px 6px 6px black;
+}
+
+#players h3 {
+    color: #d9d3d3;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 3px;
+    text-shadow: 6px 6px 6px black;
+}
+
+#tables {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+#board,
+#board2 {
+    padding: 0px;
+    margin: 0 auto;
+    border: 2px solid #181818;
+}
+
+#board tr td,
+#board2 tr td {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #181818;
+    position: relative;
+    text-align: center;
+    background: rgba(155, 154, 154, 0.8);
+    color: #191c1e;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+#tHead tr th,
+#tHead2 tr th {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #181818;
+    background: rgba(0, 0, 0, 0.6);
+    color: #d9d3d3;
+    font-family: 'Roboto', sans-serif;
+}
+
+#tHead tr:nth-child(1) th:nth-child(1),
+#tHead2 tr:nth-child(1) th:nth-child(1) {
+    border-top: none;
+    border-left: none;
+    background: none;
+}
+
+#board tr:nth-child(2n) td:nth-child(2n + 2),
+#board2 tr:nth-child(2n) td:nth-child(2n + 2) {
+    background: rgba(25, 28, 30, 0.8);
+    color: #191c1e;
+    font-family: 'Roboto', sans-serif;
+}
+
+#board tr:nth-child(2n) td:nth-child(2n + 2):hover {
+    background: rgba(0, 0, 0, 1);
+}
+
+#board2 tr:nth-child(2n) td:nth-child(2n + 2):hover {
+    background-image: url(../img/disparo.gif);
+    background-size: 100% 100%;
+}
+
+#board tr:nth-child(2n + 1) td:nth-child(2n + 3),
+#board2 tr:nth-child(2n + 1) td:nth-child(2n + 3) {
+    background: rgba(25, 28, 30, 0.8);
+    color: #191c1e;
+    font-family: 'Roboto', sans-serif;
+}
+
+#board tr:nth-child(2n + 1) td:nth-child(2n + 3):hover {
+    background: rgba(0, 0, 0, 1);
+}
+
+#board2 tr:nth-child(2n + 1) td:nth-child(2n + 3):hover {
+    background-image: url(../img/disparo.gif);
+    background-size: 100% 100%;
+}
+
+#board tr td:hover {
+    background: rgba(0, 0, 0, 1);
+}
+
+#board2 tr td:hover {
+    background-image: url(../img/disparo.gif);
+    background-size: 100% 100%;
+}
+
+#board tr:nth-child(1n) td:nth-child(1),
+#board2 tr:nth-child(1n) td:nth-child(1) {
+    border: 2px solid #181818;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6);
+    color: #d9d3d3;
+    font-family: 'Roboto', sans-serif;
+}
+
+.ship {
+    height: 90%;
+    width: 90%;
+    border-radius: 50%;
+    background-color: #d9d3d3;
+    margin: auto;
+    /*
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+*/
+    box-shadow: 3px 3px 3px black;
+
+}
+
+.salvo {
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
+}
+
+.explosion {
+    height: 100%;
+    width: 100%;
+    margin: auto;
+}
+
+.turn {
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.row {
+    width: 100%;
+    height: 5%;
+}
+
+#loginHeader {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-content: center;
+    align-items: center;
+}
+
+#logoutBtn {
+    width: 15%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+#logoutImg {
+    height: 6%;
+    width: 6%;
+}
+
+#userOn {
+    margin: 0%;
+    padding-left: 4%;
+    color: #d9d3d3;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 3px;
+    text-shadow: 6px 6px 6px black;
+}

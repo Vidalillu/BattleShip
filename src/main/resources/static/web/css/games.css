@@ -1,0 +1,300 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url('../img/Battleship2.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    width: 100%;
+}
+
+#content {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#content h1 {
+    margin-top: 0px;
+    margin-bottom: 20px;
+    color: #d9d3d3;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bolder;
+    letter-spacing: 3px;
+    font-size: 3em;
+    text-shadow: 6px 6px 6px black;
+}
+
+#tables {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#tables h2 {
+    color: #d9d3d3;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 3px;
+    text-shadow: 6px 6px 6px black;
+    margin-bottom: 20px;
+}
+
+.table1 {
+    width: 57%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    margin-bottom: 0px
+}
+
+.table2 {
+    width: 43%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    margin-bottom: 0px
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+#board,
+#board2 {
+    padding: 0px;
+    margin: 0 auto;
+    border: 2px solid #181818;
+}
+
+#board tr td,
+#board2 tr td {
+    width: 90px;
+    height: 50px;
+    border: 2px solid #181818;
+    text-align: center;
+    background: rgba(25, 28, 30, 0.8);
+    color: #9b9a9a;
+    font-family: 'Roboto', sans-serif;
+}
+
+#board tr:hover,
+#board2 tr:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+#thead,
+#thead2 {
+    padding: 0px;
+    margin: 0 auto;
+    border: 2px solid #181818;
+}
+
+#tHead tr th,
+#tHead2 tr th {
+    width: 90px;
+    height: 50px;
+    border: 2px solid #181818;
+    background: rgba(0, 0, 0, 0.6);
+    color: #d9d3d3;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+
+#tHead tr:hover,
+#tHead2 tr:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+#board tr:nth-child(1n) td:nth-child(2n+2) {
+    width: 180px;
+}
+
+#board tr:nth-child(1n) td:nth-child(1){
+    width: 140px;
+}
+
+#board tr:nth-child(1n) td:nth-child(6){
+    width: 120px;
+}
+
+#board2 tr:nth-child(1n) td:nth-child(1){
+    width: 180px;
+}
+
+#board2 tr:nth-child(1n) td:nth-child(2){
+    width: 120px;
+}
+
+label {
+    color: #d9d3d3;
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+}
+
+input {
+    margin-left: 10px;
+    background: rgba(255, 255, 255, 0);
+    border: none;
+    border-bottom: 1px solid white;
+    color: #d9d3d3;
+    font-family: 'Roboto', sans-serif;
+    padding-left: 5px;
+    
+}
+
+input:focus{
+	outline: 0px;
+}
+
+.row{
+    width: 100%;
+    height: 5%;
+}
+
+#loginHeader {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-content: center;
+    align-items: center;
+}
+
+#logoutBtn {
+    width: 15%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+#logoutImg {
+    height: 6%;
+    width: 6%;
+}
+
+#userOn {
+    margin: 0%;
+    padding-left: 4%;
+    color: #d9d3d3;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 3px;
+    text-shadow: 6px 6px 6px black;
+}
+
+#modalButton {
+    color: #d9d3d3;
+    font-family: 'Roboto', sans-serif;
+    text-shadow: 6px 6px 6px black;
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(0, 0, 0, 0.6);
+}
+
+#modalButton:focus{
+	outline: 0px;
+}
+
+.gameButton button {
+    width: 80%;
+    height: 60%;
+    background: #101214;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 10px;
+    font-size: 0.6em;
+    letter-spacing: 3px;
+    box-shadow: 1px 1px 1px black;
+    border-width: 1.5px;
+}
+
+.gameButton button:focus{
+	outline: 0px;
+}
+
+.joinButton button {
+    width: 80%;
+    height: 60%;
+    background: #101214;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 10px;
+    font-size: 0.6em;
+    letter-spacing: 3px;
+    box-shadow: 1px 1px 1px black;
+    border-width: 1.5px;
+}
+
+.joinButton button:focus{
+	outline: 0px;
+}
+
+#newgameButton {
+    width: 10%;
+    height: 60%;
+}
+
+.newgameButton button {
+    width: 100%;
+    height: 100%;
+    background: #101214;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 10px;
+    font-size: 0.6em;
+    letter-spacing: 3px;
+    box-shadow: 1px 1px 1px black;
+    border-width: 1.5px;
+}
+
+.newgameButton button:focus{
+	outline: 0px;
+}
+
+/* Login & Register */
+
+.modal-header {
+  padding: 0;
+}
+.modal-header .close {
+  padding: 10px 15px;
+}
+.modal-header ul {
+  border: none;
+}
+.modal-header ul li {
+  margin: 0;
+}
+.modal-header ul li a {
+  border: none;
+  border-radius: 0;
+}
+.modal-header ul li.active a {
+  color: #e12f27;
+}
+.modal-header ul li a:hover {
+  border: none;
+}
+.modal-header ul li a span {
+  margin-left: 10px;
+}
+.modal-body .form-group {
+  margin-bottom: 10px;
+}
+
+
