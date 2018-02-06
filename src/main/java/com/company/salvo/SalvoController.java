@@ -177,16 +177,22 @@ public class SalvoController {
 
                 List<String> gameplayerSalvo = getgameplayerLocations(gameplayer);
 
+                System.out.println("other shots gameplayer " + getgameplayerLocations(gameplayer));
+
                 List<List<String>> opponentShips = getopponentshipLocations(enemy);
 
-                for(int x=0;x<opponentShips.size();x++) {
-                    if(gameplayerSalvo.containsAll(opponentShips.get(x))){
-                        opponentShips.get(x).retainAll(gameplayerSalvo);
-                        opponentShips.get(x).add("sunk");
-                    }else{
-                        opponentShips.get(x).retainAll(gameplayerSalvo);
-                    }
-                }
+                System.out.println("other barcos enemigos " + getopponentshipLocations(enemy));
+
+//                for(int x=0;x<opponentShips.size();x++) {
+//                    if(gameplayerSalvo.containsAll(opponentShips.get(x))){
+//                        opponentShips.get(x).retainAll(gameplayerSalvo);
+//                        opponentShips.get(x).add("sunk");
+//                    }else if (enemy == gameplayer) {
+//                        opponentShips.get(x);
+//                    }else{
+//                        opponentShips.get(x).retainAll(gameplayerSalvo);
+//                    }
+//                }
 
 
 
@@ -197,6 +203,7 @@ public class SalvoController {
                         .stream()
                         .map(gamePlayer -> makeGamePlayerDTO(gamePlayer))
                         .collect(Collectors.toList()));
+                dto.put("state", getgameState(gameplayer, enemy));
                 dto.put("ships", gameplayer.getShips()
                         .stream()
                         .map(ship -> makeShipDTO(ship))
@@ -265,7 +272,6 @@ public class SalvoController {
         Set<GamePlayer>gamePlayers = game.getGamePlayers();
 
         for(GamePlayer gP: gamePlayers) {
-            System.out.println(gP);
             if(!gP.equals(gameplayer)) {
                 return gP;
             }
@@ -284,7 +290,6 @@ public class SalvoController {
                 list.add(location);
             }
         }
-        System.out.println(list);
         return list;
     }
 
@@ -297,8 +302,110 @@ public class SalvoController {
         for(Ship ship: opponentShips) {
                 list.add(ship.getLocation());
         }
-        System.out.println(list);
         return list;
+    }
+
+    private GamePlayer getgameOwner (GamePlayer gameplayer, GamePlayer enemy){
+
+        GamePlayer ownergamePlayer = null;
+
+        if (gameplayer.getId() < enemy.getId()) {
+            ownergamePlayer = gameplayer;
+        } else {
+            ownergamePlayer = enemy;
+        }
+        return ownergamePlayer;
+    }
+
+    private GamePlayer getgameJoiner (GamePlayer gameplayer, GamePlayer enemy){
+
+        GamePlayer joinergamePlayer = null;
+
+        if (gameplayer.getId() > enemy.getId()) {
+            joinergamePlayer = gameplayer;
+        } else {
+            joinergamePlayer = enemy;
+        }
+        return joinergamePlayer;
+    }
+
+
+    private String getgameState (GamePlayer gameplayer, GamePlayer enemy) {
+
+        String state = new String();
+
+        GamePlayer ownergamePlayer = getgameOwner(gameplayer, enemy);
+        System.out.println(ownergamePlayer.getPlayer().getUserName());
+
+        GamePlayer joinergamePlayer = getgameJoiner(gameplayer, enemy);
+        System.out.println(joinergamePlayer.getPlayer().getUserName());
+
+        if (ownergamePlayer == gameplayer) {
+            if (ownergamePlayer.getShips().isEmpty()) {
+                state = "placeShips";
+            }
+            if (!ownergamePlayer.getShips().isEmpty() && gameplayer == enemy){
+                state = "wait";
+            }
+            if (!ownergamePlayer.getShips().isEmpty() && joinergamePlayer.getShips().isEmpty()) {
+                state = "wait";
+            }
+            if (gameplayer != enemy && !ownergamePlayer.getShips().isEmpty() && !joinergamePlayer.getShips().isEmpty() && (joinergamePlayer.getSalvos().size() > ownergamePlayer.getSalvos().size())) {
+                state = "shot";
+            }
+            if (!ownergamePlayer.getShips().isEmpty() && !joinergamePlayer.getShips().isEmpty() && joinergamePlayer.getSalvos().size() == ownergamePlayer.getSalvos().size()) {
+                state = "wait";
+            }
+            if (opponnentshipSunks(gameplayer, enemy) == 5){
+                state = "winner";
+            }
+            if (opponnentshipSunks(enemy, gameplayer) == 5){
+                state = "losser";
+            }
+        }
+        if (gameplayer != enemy && joinergamePlayer == gameplayer) {
+            if (joinergamePlayer.getShips().isEmpty()) {
+                state = "placeShips";
+            }
+            if (!joinergamePlayer.getShips().isEmpty() && ownergamePlayer.getShips().isEmpty()) {
+                state = "wait";
+            }
+            if (!ownergamePlayer.getShips().isEmpty() && !joinergamePlayer.getShips().isEmpty() && joinergamePlayer.getSalvos().size() > ownergamePlayer.getSalvos().size()) {
+                state = "wait";
+            }
+            if (!ownergamePlayer.getShips().isEmpty() && !joinergamePlayer.getShips().isEmpty() && joinergamePlayer.getSalvos().size() == ownergamePlayer.getSalvos().size()) {
+                state = "shot";
+            }
+            if (opponnentshipSunks(gameplayer, enemy) == 5){
+                state = "winner";
+            }
+            if (opponnentshipSunks(enemy, gameplayer) == 5){
+                state = "losser";
+            }
+        }
+        return state;
+    }
+
+    private int opponnentshipSunks(GamePlayer gameplayer, GamePlayer enemy) {
+
+        int num = 0;
+
+        List<String> gameplayerSalvo = getgameplayerLocations(gameplayer);
+
+        List<List<String>> enemyShips = getopponentshipLocations(enemy);
+
+        System.out.println("shots gameplayer " + getgameplayerLocations(gameplayer));
+        System.out.println("barcos enemigos " + getopponentshipLocations(enemy));
+
+        for(int x=0;x<enemyShips.size();x++) {
+            if (gameplayerSalvo.containsAll(enemyShips.get(x))) {
+                num += 1;
+            } else {
+                num += 0;
+            }
+        }
+        System.out.println(num);
+        return num;
     }
 
 }

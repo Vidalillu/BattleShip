@@ -46,6 +46,7 @@ public class salvoApplication {
 			Player player2 = new Player("j.bauer@ctu.gov", "24");
 			Player player3 = new Player("kim_bauer@gmail.com", "kb");
 			Player player4 = new Player("t.almeida@ctu.gov", "mole");
+			Player player5 = new Player("vidalillu@gmail.com", "2515");
 
 			Game game1 = new Game(new Date());
 			Game game2 = new Game(new Date(System.currentTimeMillis() + 3600 * 1000));
@@ -191,6 +192,7 @@ public class salvoApplication {
 			repository.save(player2);
 			repository.save(player3);
 			repository.save(player4);
+			repository.save(player5);
 
 			repository2.save(game1);
 			repository2.save(game2);
