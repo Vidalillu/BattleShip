@@ -34,6 +34,7 @@ body {
     font-family: 'Roboto', sans-serif;
     letter-spacing: 3px;
     text-shadow: 6px 6px 6px black;
+    margin-top: 0px;
 }
 
 #tables {
@@ -41,7 +42,7 @@ body {
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
 table {
@@ -58,6 +59,12 @@ table {
     border: 2px solid #181818;
 }
 
+#board3 {
+    padding: 0px;
+    margin: 0 auto;
+    border: none;
+}
+
 #board tr td,
 #board2 tr td {
     width: 50px;
@@ -68,7 +75,205 @@ table {
     background: rgba(155, 154, 154, 0.8);
     color: #191c1e;
     font-family: 'Roboto', sans-serif;
+}
 
+.carrier {
+    width: 250px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    font-size: 10px;
+}
+
+.carrier.rotated {
+    width: 50px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    font-size: 50px;
+}
+
+.battleship {
+    width: 200px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.battleship.rotated {
+    width: 50px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.submarine {
+    width: 150px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.submarine.rotated {
+    width: 50px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.destroyer {
+    width: 150px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    font-size: 10px;
+}
+
+.destroyer.rotated {
+    width: 50px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.patrolBoat {
+    width: 100px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.patrolBoat.rotated {
+    width: 50px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+#saveButton {
+    width: 50%;
+    height: 5%;
+}
+
+.saveButton button {
+    width: 100%;
+    height: 100%;
+    background: #101214;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 10px;
+    font-size: 0.6em;
+    letter-spacing: 3px;
+    box-shadow: 1px 1px 1px black;
+    border-width: 1.5px;
+}
+
+.saveButton button:focus {
+    outline: 0px;
+}
+
+#table3 {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+
+.theship {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+
+.theship div {
+    height: 90%;
+    width: 90%;
+    border-radius: 50%;
+    background-color: #d9d3d3;
+    margin: auto;
+    box-shadow: 3px 3px 3px black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    
+}
+
+.roundShip img{
+    width: 40%;
+    height: 40%;
+}
+
+#board3 tr td {
+    width: 50px;
+    height: 50px;
+    position: relative;
+}
+
+#board tr td h3,
+#board2 tr td h3 {
+    margin: 0px;
+    font-size: 1.4em;
+}
+
+#tHead tr th h3,
+#tHead2 tr th h3 {
+    margin: 0px;
+    font-size: 1.4em;
 }
 
 #tHead tr th,
@@ -79,6 +284,7 @@ table {
     background: rgba(0, 0, 0, 0.6);
     color: #d9d3d3;
     font-family: 'Roboto', sans-serif;
+    text-align: center;
 }
 
 #tHead tr:nth-child(1) th:nth-child(1),
@@ -144,25 +350,34 @@ table {
     border-radius: 50%;
     background-color: #d9d3d3;
     margin: auto;
-    /*
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-*/
-    box-shadow: 3px 3px 3px black;
+    box-shadow: 2px 2px 2px black;
+}
 
+.opponentShip {
+    height: 90%;
+    width: 90%;
+    border-radius: 50%;
+    background-color: black;
+    margin: auto;
+    box-shadow: 2px 2px 2px #555;
+}
+
+.opponentsunkShip {
+    height: 90%;
+    width: 90%;
+    border-radius: 50%;
+    background-color: darkred;
+    margin: auto;
+    box-shadow: 2px 2px 2px black;
 }
 
 .salvo {
     height: 100%;
     width: 100%;
     margin: auto;
-    position: absolute;
     top: 0;
     left: 0;
     right: 0;
-
 }
 
 .explosion {
@@ -182,6 +397,21 @@ table {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.turn h4 {
+    font-size: 1em;
+    font-weight: bolder;
+}
+
+.shot {
+    height: 100%;
+    width: 100%;
+}
+
+.theShot {
+    height: 100%;
+    width: 100%;
 }
 
 .row {
@@ -219,4 +449,35 @@ table {
     font-family: 'Roboto', sans-serif;
     letter-spacing: 3px;
     text-shadow: 6px 6px 6px black;
+}
+
+#table4 {
+    width: 555.2px;
+    height: 610.89px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+#shotButton {
+    width: 150px;
+    height: 150px;
+}
+
+.shotButton button {
+    width: 100%;
+    height: 100%;
+    background: darkred;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 50%;
+    font-size: 2.5em;
+    letter-spacing: 3px;
+    box-shadow: 1px 1px 1px black;
+    border-width: 1.5px;
+}
+
+.shotButton button:focus {
+    outline: 0px;
 }

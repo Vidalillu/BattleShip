@@ -152,16 +152,28 @@ public class SalvoController {
         if (loggedPlayer != currentPlayer) {
             return new ResponseEntity("It's not your game!!", HttpStatus.UNAUTHORIZED);
         }
-//        if (!gameplayer.getSalvos().isEmpty()) {
-//            return new ResponseEntity("You have alredy shot this turn", HttpStatus.FORBIDDEN );
-//        }
         salvoRepo.save(new Salvo(turnNumber, location, gameplayer));
         return new ResponseEntity("BOOM!!", HttpStatus.CREATED);
     }
 
     @Autowired
-    private GamePlayerRepository gameplayerRepo;
+    private ScoreRepository scoreRepo;
+//
+//    @RequestMapping(path = "/game/{gameId}/scores", method = RequestMethod.POST)
+//    public ResponseEntity<Map<String, Object>> playerScores(@PathVariable Long gameId, Authentication authentication, @RequestParam Integer score) {
+//        Game game = gamerepo.findOne(gameId);
+//        Player loggedPlayer = playerrepo.findByUserName(authentication.getName());
+//
+//        if (loggedPlayer == null) {
+//            return new ResponseEntity("You have to be logged first!!", HttpStatus.UNAUTHORIZED);
+//        }
+//
+//        scoreRepo.save(new Score(loggedPlayer, game, score, new Date()));
+//        return new ResponseEntity("Score placed", HttpStatus.CREATED);
+//    }
 
+    @Autowired
+    private GamePlayerRepository gameplayerRepo;
     @RequestMapping("/game_view/{gamePlayerId}")
     public ResponseEntity<Map<String, Object>> findGamePlayer(@PathVariable Long gamePlayerId, Authentication authentication) {
 
@@ -177,24 +189,18 @@ public class SalvoController {
 
                 List<String> gameplayerSalvo = getgameplayerLocations(gameplayer);
 
-                System.out.println("other shots gameplayer " + getgameplayerLocations(gameplayer));
-
                 List<List<String>> opponentShips = getopponentshipLocations(enemy);
 
-                System.out.println("other barcos enemigos " + getopponentshipLocations(enemy));
-
-//                for(int x=0;x<opponentShips.size();x++) {
-//                    if(gameplayerSalvo.containsAll(opponentShips.get(x))){
-//                        opponentShips.get(x).retainAll(gameplayerSalvo);
-//                        opponentShips.get(x).add("sunk");
-//                    }else if (enemy == gameplayer) {
-//                        opponentShips.get(x);
-//                    }else{
-//                        opponentShips.get(x).retainAll(gameplayerSalvo);
-//                    }
-//                }
-
-
+                for(int x=0;x<opponentShips.size();x++) {
+                    if(gameplayerSalvo.containsAll(opponentShips.get(x))){
+                        opponentShips.get(x).retainAll(gameplayerSalvo);
+                        opponentShips.get(x).add("sunk");
+                    }else if (enemy == gameplayer) {
+                        opponentShips.get(x);
+                    }else{
+                        opponentShips.get(x).retainAll(gameplayerSalvo);
+                    }
+                }
 
                 Map<String, Object> dto = new LinkedHashMap<String, Object>();
                 dto.put("id", game.getId());
@@ -203,7 +209,6 @@ public class SalvoController {
                         .stream()
                         .map(gamePlayer -> makeGamePlayerDTO(gamePlayer))
                         .collect(Collectors.toList()));
-                dto.put("state", getgameState(gameplayer, enemy));
                 dto.put("ships", gameplayer.getShips()
                         .stream()
                         .map(ship -> makeShipDTO(ship))
@@ -213,6 +218,7 @@ public class SalvoController {
                         .map(salvo -> makeSalvoDTO(salvo))
                         .collect(Collectors.toList()));
                 dto.put("hits", opponentShips);
+                dto.put("state", getgameState(gameplayer, enemy, opponentShips));
 
                 return new ResponseEntity(dto, HttpStatus.OK);
 
@@ -276,6 +282,7 @@ public class SalvoController {
                 return gP;
             }
         }
+        System.out.println("Fuck You!!");
         return gameplayer;
     }
 
@@ -295,6 +302,8 @@ public class SalvoController {
 
     private List<List<String>> getopponentshipLocations(GamePlayer gameplayer){
 
+
+
         Set<Ship>opponentShips = gameplayer.getShips();
 
         List<List<String>> list = new ArrayList<>();
@@ -303,6 +312,7 @@ public class SalvoController {
                 list.add(ship.getLocation());
         }
         return list;
+
     }
 
     private GamePlayer getgameOwner (GamePlayer gameplayer, GamePlayer enemy){
@@ -329,16 +339,17 @@ public class SalvoController {
         return joinergamePlayer;
     }
 
-
-    private String getgameState (GamePlayer gameplayer, GamePlayer enemy) {
+    private String getgameState (GamePlayer gameplayer, GamePlayer enemy, List<List<String>> opponentShips) {
 
         String state = new String();
 
         GamePlayer ownergamePlayer = getgameOwner(gameplayer, enemy);
-        System.out.println(ownergamePlayer.getPlayer().getUserName());
 
         GamePlayer joinergamePlayer = getgameJoiner(gameplayer, enemy);
-        System.out.println(joinergamePlayer.getPlayer().getUserName());
+
+        List<String> gameplayerShips = getgameplayerShips(gameplayer);
+
+        List<String> opponentSalvos = getopponentSalvos(enemy);
 
         if (ownergamePlayer == gameplayer) {
             if (ownergamePlayer.getShips().isEmpty()) {
@@ -356,10 +367,20 @@ public class SalvoController {
             if (!ownergamePlayer.getShips().isEmpty() && !joinergamePlayer.getShips().isEmpty() && joinergamePlayer.getSalvos().size() == ownergamePlayer.getSalvos().size()) {
                 state = "wait";
             }
-            if (opponnentshipSunks(gameplayer, enemy) == 5){
+            if (opponnentshipSunks(opponentShips) == 5){
+                Score winner = new Score(ownergamePlayer.getPlayer(), ownergamePlayer.getGame(), 3,new Date());
+                Score losser = new Score(joinergamePlayer.getPlayer(), joinergamePlayer.getGame(), 0,new Date());
+                scoreRepo.save(winner);
+                scoreRepo.save(losser);
                 state = "winner";
             }
-            if (opponnentshipSunks(enemy, gameplayer) == 5){
+            if(ownergamePlayer.getScore() != null && ownergamePlayer.getScore().getScore() == 3){
+                state = "winner";
+            }
+            if (!ownergamePlayer.getShips().isEmpty() && !joinergamePlayer.getShips().isEmpty() && opponentSalvos.containsAll(gameplayerShips)){
+                state = "losser";
+            }
+            if(ownergamePlayer.getScore() != null && ownergamePlayer.getScore().getScore() == 0) {
                 state = "losser";
             }
         }
@@ -376,36 +397,79 @@ public class SalvoController {
             if (!ownergamePlayer.getShips().isEmpty() && !joinergamePlayer.getShips().isEmpty() && joinergamePlayer.getSalvos().size() == ownergamePlayer.getSalvos().size()) {
                 state = "shot";
             }
-            if (opponnentshipSunks(gameplayer, enemy) == 5){
+            if (opponnentshipSunks(opponentShips) == 5){
+                Score winner = new Score(joinergamePlayer.getPlayer(), joinergamePlayer.getGame(), 3,new Date());
+                Score losser = new Score(ownergamePlayer.getPlayer(), ownergamePlayer.getGame(), 0,new Date());
+                scoreRepo.save(winner);
+                scoreRepo.save(losser);
                 state = "winner";
             }
-            if (opponnentshipSunks(enemy, gameplayer) == 5){
+            if(joinergamePlayer.getScore() != null && joinergamePlayer.getScore().getScore() == 3) {
+                state = "winner";
+            }
+            if (!ownergamePlayer.getShips().isEmpty() && !joinergamePlayer.getShips().isEmpty() && opponentSalvos.containsAll(gameplayerShips)){
+                state = "losser";
+            }
+            if(joinergamePlayer.getScore() != null && joinergamePlayer.getScore().getScore() == 0) {
                 state = "losser";
             }
         }
         return state;
     }
 
-    private int opponnentshipSunks(GamePlayer gameplayer, GamePlayer enemy) {
+    private int opponnentshipSunks(List<List<String>> opponentShips) {
 
         int num = 0;
 
-        List<String> gameplayerSalvo = getgameplayerLocations(gameplayer);
-
-        List<List<String>> enemyShips = getopponentshipLocations(enemy);
-
-        System.out.println("shots gameplayer " + getgameplayerLocations(gameplayer));
-        System.out.println("barcos enemigos " + getopponentshipLocations(enemy));
-
-        for(int x=0;x<enemyShips.size();x++) {
-            if (gameplayerSalvo.containsAll(enemyShips.get(x))) {
+        for(int x=0;x<opponentShips.size();x++) {
+            if (opponentShips.get(x).contains("sunk")) {
                 num += 1;
             } else {
                 num += 0;
             }
         }
-        System.out.println(num);
         return num;
     }
 
+    private List<String> getgameplayerShips(GamePlayer gameplayer){
+
+        Set<Ship>gameplayerShips = gameplayer.getShips();
+
+        List<String> list = new ArrayList<>();
+
+        for(Ship ship: gameplayerShips) {
+            for(String location: ship.getLocation()){
+                list.add(location);
+            }
+        }
+        return list;
+    }
+
+    private List<String> getopponentSalvos(GamePlayer gameplayer){
+
+        Set<Salvo>opponentSalvos = gameplayer.getSalvos();
+
+        List<String> list = new ArrayList<>();
+
+        for(Salvo salvo: opponentSalvos) {
+            for(String location: salvo.getLocation()) {
+                list.add(location);
+            }
+        }
+        return list;
+    }
+
+//    private List<String> getshipLocation(Ship ship){
+//
+//        ArrayList<String> shipLocation = new ArrayList<String>(ship.getLocation());
+//
+//        for(int i=0; i < shipLocation.size(); i++){
+//            if (shipLocation.get(i) == "sunk") {
+//                System.out.println(i);
+//                shipLocation.remove(i);
+//            }
+//        }
+//        System.out.println(shipLocation);
+//        return shipLocation;
+//    }
 }

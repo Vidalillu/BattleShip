@@ -47,8 +47,18 @@ body {
     margin-bottom: 20px;
 }
 
-.table {
-    width: 100%;
+.table1 {
+    width: 57%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    margin-bottom: 0px
+}
+
+.table2 {
+    width: 43%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -118,6 +128,10 @@ table {
     width: 140px;
 }
 
+#board tr:nth-child(1n) td:nth-child(6){
+    width: 120px;
+}
+
 #board2 tr:nth-child(1n) td:nth-child(1){
     width: 180px;
 }
@@ -136,7 +150,7 @@ input {
     margin-left: 10px;
     background: rgba(255, 255, 255, 0);
     border: none;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid white;
     color: #d9d3d3;
     font-family: 'Roboto', sans-serif;
     padding-left: 5px;
@@ -193,6 +207,62 @@ input:focus{
 }
 
 #modalButton:focus{
+	outline: 0px;
+}
+
+.gameButton button {
+    width: 80%;
+    height: 60%;
+    background: #101214;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 10px;
+    font-size: 0.6em;
+    letter-spacing: 3px;
+    box-shadow: 1px 1px 1px black;
+    border-width: 1.5px;
+}
+
+.gameButton button:focus{
+	outline: 0px;
+}
+
+.joinButton button {
+    width: 80%;
+    height: 60%;
+    background: #101214;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 10px;
+    font-size: 0.6em;
+    letter-spacing: 3px;
+    box-shadow: 1px 1px 1px black;
+    border-width: 1.5px;
+}
+
+.joinButton button:focus{
+	outline: 0px;
+}
+
+#newgameButton {
+    width: 10%;
+    height: 60%;
+}
+
+.newgameButton button {
+    width: 100%;
+    height: 100%;
+    background: #101214;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 10px;
+    font-size: 0.6em;
+    letter-spacing: 3px;
+    box-shadow: 1px 1px 1px black;
+    border-width: 1.5px;
+}
+
+.newgameButton button:focus{
 	outline: 0px;
 }
 

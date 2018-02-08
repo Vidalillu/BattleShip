@@ -56,15 +56,6 @@ function getParameterByName(name, url) {
 $(document).ready(function () {
     var gp = getParameterByName('gp');
     $.getJSON("../api/game_view/" + gp, function (data) {
-        if (data.ships[0] != null) {
-            $('#table1').show();
-            $('#table2').show();
-            $('#table3').hide();
-        } else {
-            $('#table1').show();
-            $('#table2').hide();
-            $('#table3').show();
-        }
         if (data.gamePlayers[1] != null) {
             if (data.gamePlayers[0].id == gp) {
                 document.getElementById('game').innerHTML = "GAME " + data.id;
@@ -92,12 +83,14 @@ $(document).ready(function () {
         for (var i in ships) {
             var locations = ships[i].locations;
             for (var j in locations) {
-                if (locations[j] == document.getElementById(locations[j]).id) {
-                    var newElement = document.createElement('div');
-                    newElement.setAttribute("typeShip", ships[i].type);
-                    newElement.className = "ship";
-                    newElement.id = "S" + locations[j];
-                    document.getElementById(locations[j]).appendChild(newElement);
+                if (locations[j] != "sunk") {
+                    if (locations[j] == document.getElementById(locations[j]).id) {
+                        var newElement = document.createElement('div');
+                        newElement.setAttribute("typeShip", ships[i].type);
+                        newElement.className = "ship";
+                        newElement.id = "S" + locations[j];
+                        document.getElementById(locations[j]).appendChild(newElement);
+                    }
                 }
             }
         }
@@ -133,7 +126,7 @@ $(document).ready(function () {
                                     newElement4.innerHTML = j;
                                     newElement3.appendChild(newElement4);
                                     var playerlastTurn = j;
-                                }else if ((opponentShips[n].includes(playerSalvoesTurn[k])) && (document.getElementById("O" + playerSalvoesTurn[k]) == null)) {
+                                } else if ((opponentShips[n].includes(playerSalvoesTurn[k])) && (document.getElementById("O" + playerSalvoesTurn[k]) == null)) {
                                     $("#A" + playerSalvoesTurn[k]).empty();
                                     var newElement = document.createElement('div');
                                     newElement.className = "opponentShip";
@@ -244,6 +237,49 @@ $(document).ready(function () {
     });
 });
 
+// PlaceShips
+
+$(document).ready(function () {
+    var gp = getParameterByName('gp');
+    $.getJSON("../api/game_view/" + gp, function (data) {
+        var gameId = data.id;
+        if (data.state == "placeShips") {
+            $('#table1').show();
+            $('#table2').hide();
+            $('#table3').show();
+        } else if (data.state == "winner") {
+            $('#table1').hide();
+            $('#table2').hide();
+            $('#table3').hide();
+            //            $.post("/api/game/" + gameId + "/scores", {
+            //                    score: 3
+            //                }).done(function () {
+            //
+            //                })
+            //                .fail(function () {
+            //
+            //                });
+        } else if (data.state == "losser") {
+            $('#table1').hide();
+            $('#table2').hide();
+            $('#table3').hide();
+            //            $.post("/api/game/" + gameId + "/scores", {
+            //                    score: 0
+            //                }).done(function () {
+            //
+            //                })
+            //                .fail(function () {
+            //
+            //                });
+        } else {
+            $('#table1').show();
+            $('#table2').show();
+            $('#table3').hide();
+        }
+    });
+});
+
+
 $(document).ready(function () {
     $.getJSON("../api/games", function (data) {
         if (data.player != null) {
@@ -261,6 +297,8 @@ $(document).ready(function () {
             });
     });
 });
+
+//Drag&Drop Ships
 
 var carrier = document.getElementById('drag1');
 var battleship = document.getElementById('drag2');
@@ -473,26 +511,33 @@ function postShip(shipType, cells) {
 //Funcion disparos
 
 function shoting(td) {
-    if (td.firstChild == null && howmanyShots() <= "2") {
-        var newElement = document.createElement('div');
-        newElement.className = "shoting";
-        td.appendChild(newElement);
-        var newElement1 = document.createElement('img');
-        newElement1.className = "theShot";
-        newElement1.src = "img/torpedo.png";
-        newElement.appendChild(newElement1);
-        if (howmanyShots() == "3") {
-            $(".shotButton").find("button").css("background-color", "darkred");
-            $('#table1').fadeOut(500).promise().done(function () {
-                $('#table4').fadeIn(500);
-            });
-        } else if (howmanyShots() < "3") {
-            $(".shotButton").find("button").css("background-color", "grey");
+    var gp = getParameterByName('gp');
+    $.getJSON("../api/game_view/" + gp, function (data) {
+        if (data.state == "shot") {
+            if (td.firstChild == null && howmanyShots() <= "2") {
+                var newElement = document.createElement('div');
+                newElement.className = "shoting";
+                td.appendChild(newElement);
+                var newElement1 = document.createElement('img');
+                newElement1.className = "theShot";
+                newElement1.src = "img/torpedo.png";
+                newElement.appendChild(newElement1);
+                if (howmanyShots() == "3") {
+                    $(".shotButton").find("button").css("background-color", "darkred");
+                    $('#table1').fadeOut(300).promise().done(function () {
+                        $('#table4').fadeIn(300);
+                    });
+                } else if (howmanyShots() < "3") {
+                    $(".shotButton").find("button").css("background-color", "grey");
+                }
+            } else if (td.firstChild != null && td.firstChild.className == "shoting") {
+                $(td.firstChild).remove();
+                $(".shotButton").find("button").css("background-color", "grey");
+            }
+        } else if (data.state == "wait") {
+            return false;
         }
-    } else if (td.firstChild != null && td.firstChild.className == "shoting") {
-        $(td.firstChild).remove();
-        $(".shotButton").find("button").css("background-color", "grey");
-    }
+    });
 }
 
 // Funcion ultimo turno

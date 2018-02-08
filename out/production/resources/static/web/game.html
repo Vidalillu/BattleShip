@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/game.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
@@ -15,7 +17,7 @@
             <div id="loginHeader">
                 <div id="logoutBtn" type="button">
                     <img id="logoutImg" src="../web/img/poweroff.png">
-                    <h5 id="userOn"></h5>
+                    <h6 id="userOn"></h6>
                 </div>
             </div>
         </div>
@@ -28,26 +30,170 @@
 
         <div id="tables">
 
-            <table>
-                <thead id="tHead2">
+            <div id="table2" style="display: none">
 
-                </thead>
+                <table>
+                    <thead id="tHead2">
 
-                <tbody id="board2">
+                    </thead>
 
-                </tbody>
-            </table>
+                    <tbody id="board2">
 
-            <table>
-                <thead id="tHead">
+                    </tbody>
+                </table>
 
-                </thead>
+            </div>
 
-                <tbody id="board">
+            <div id="table1" style="display: none">
 
-                </tbody>
-            </table>
+                <table>
+                    <thead id="tHead">
 
+                    </thead>
+
+                    <tbody id="board" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div id="table3" ondrop="drop(event)" ondragover="allowDrop(event)" style="display: none">
+
+                <table>
+                    <thead id="tHead3">
+
+                    </thead>
+
+                    <tbody id="board3">
+                        <tr>
+                            <td>
+                                <div class="carrier" data-size="5" draggable="true" ondragstart="drag(event)" ondragend="endDrag(event)" id="drag1">
+                                    <div class="theship">
+                                        <div class="roundShip"><img draggable="false" src="../web/img/direccion.svg"></div>
+                                    </div>
+                                    <div class="theship">
+                                        <div class="roundShip"></div>
+                                    </div>
+                                    <div class="theship">
+                                        <div class="roundShip"></div>
+                                    </div>
+                                    <div class="theship">
+                                        <div class="roundShip"></div>
+                                    </div>
+                                    <div class="theship">
+                                        <div class="roundShip"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="battleship" data-size="4" draggable="true" ondragstart="drag(event)" ondragend="endDrag(event)" id="drag2">
+                                    <div class="theship">
+                                        <div class="roundShip"><img draggable="false" src="../web/img/direccion.svg"></div>
+                                    </div>
+                                    <div class="theship">
+                                        <div class="roundShip"></div>
+                                    </div>
+                                    <div class="theship">
+                                        <div class="roundShip"></div>
+                                    </div>
+                                    <div class="theship">
+                                        <div class="roundShip"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="submarine" data-size="3" draggable="true" ondragstart="drag(event)" ondragend="endDrag(event)" id="drag3">
+                                    <div class="theship">
+                                        <div class="roundShip"><img draggable="false" src="../web/img/direccion.svg"></div>
+                                    </div>
+                                    <div class="theship">
+                                        <div class="roundShip"></div>
+                                    </div>
+                                    <div class="theship">
+                                        <div class="roundShip"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="destroyer" data-size="3" draggable="true" ondragstart="drag(event)" ondragend="endDrag(event)" id="drag4">
+                                    <div class="theship">
+                                        <div class="roundShip"><img draggable="false" src="../web/img/direccion.svg"></div>
+                                    </div>
+                                    <div class="theship">
+                                        <div class="roundShip"></div>
+                                    </div>
+                                    <div class="theship">
+                                        <div class="roundShip"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="patrolBoat" data-size="2" draggable="true" ondragstart="drag(event)" ondragend="endDrag(event)" id="drag5">
+                                    <div class="theship">
+                                        <div class="roundShip"><img draggable="false" src="../web/img/direccion.svg"></div>
+                                    </div>
+                                    <div class="theship">
+                                        <div class="roundShip"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div id="saveButton">
+                    <a class="saveButton"><button>SAVE</button></a>
+                </div>
+            </div>
+            <div id="table4" style="display: none">
+                <div id="shotButton">
+                    <a class="shotButton"><button>BOOM</button></a>
+                </div>
+            </div>
         </div>
 
     </div>

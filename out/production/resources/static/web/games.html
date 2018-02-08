@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Games</title>
+     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/games.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -19,12 +20,15 @@
 
             <!-- Signin & Signup -->
             <div id="loginHeader">
-                <div id="modal">
+                <div id="modal" style="display: none">
                     <a id="modalButton" class="btn btn-primary" href="#" data-toggle="modal" data-target=".login-register-form">Login - Registration</a>
                 </div>
-                <div id="logoutBtn" type="button">
+                <div id="newgameButton" style="display: none">
+                    <a class="newgameButton"><button>NEW GAME</button></a>
+                </div>
+                <div id="logoutBtn" type="button" style="display: none">
                     <img id="logoutImg" src="../web/img/poweroff.png">
-                    <h5 id="userOn"></h5>
+                    <h6 id="userOn"></h6>
                 </div>
             </div>
 
@@ -91,7 +95,7 @@
 
         <div id="tables">
 
-            <div class="table">
+            <div class="table1">
 
                 <h2>BATTLES</h2>
 
@@ -105,6 +109,7 @@
                             <th>SCORE</th>
                             <th>PLAYER 2</th>
                             <th>SCORE</th>
+                            <th>GAME</th>
 
                         </tr>
 
@@ -118,7 +123,7 @@
 
             </div>
 
-            <div class="table">
+            <div class="table2">
 
                 <h2>LEADERBOARD</h2>
 
