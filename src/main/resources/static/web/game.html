@@ -6,6 +6,7 @@
     <title>Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/game.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
@@ -15,6 +16,9 @@
     <div id="content">
         <div class="row">
             <div id="loginHeader">
+                <div id="closeButton">
+                    <a class="closeButton"><button>CLOSE</button></a>
+                </div>
                 <div id="logoutBtn" type="button">
                     <img id="logoutImg" src="../web/img/poweroff.png">
                     <h6 id="userOn"></h6>
@@ -25,12 +29,31 @@
         <h1 id="game"></h1>
 
         <div id="players">
+            <div id="player1">
+            </div>
+            <div id="player2">
+            </div>
+        </div>
 
+        <div id="winner" style="display: none">
+            <h2 id="youwin">YOU WIN</h2>
+        </div>
+
+        <div id="loser" style="display: none">
+            <h2 id="youlose">YOU LOSE</h2>
+        </div>
+
+        <div id="puny" style="display: none">
+            <img class="imagepuny" src="img/puny.png">
+        </div>
+
+        <div id="victory" style="display: none">
+            <img class="imagevictory" src="img/victory.png">
         </div>
 
         <div id="tables">
 
-            <div id="table2" style="display: none">
+            <div id="table2">
 
                 <table>
                     <thead id="tHead2">
@@ -44,7 +67,7 @@
 
             </div>
 
-            <div id="table1" style="display: none">
+            <div id="table1">
 
                 <table>
                     <thead id="tHead">

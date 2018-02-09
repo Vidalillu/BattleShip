@@ -1,4 +1,16 @@
 $(document).ready(function () {
+    var previous = null;
+    var current = null;
+    setInterval(function () {
+        $.getJSON("../api/games", function (json) {
+            current = JSON.stringify(json);
+            if (previous && current && previous !== current) {
+                console.log('refresh');
+                
+            }
+            previous = current;
+        });
+    }, 2000);
     $.getJSON("../api/games", function (data) {
         if (data.player != null) {
             $('#modal').hide();
@@ -162,9 +174,9 @@ $(document).ready(function () {
         $("#newgameButton").click(function () {
             $.post("/api/games")
                 .done(function () {
-                        window.alert("New Game created!!")
-                        window.open("game.html?gp=" + biggestId(data));
-                        location.reload();
+                    window.alert("New Game created!!")
+                    window.open("game.html?gp=" + biggestId(data));
+                    location.reload();
                 })
                 .fail(function () {
                     window.alert("Registration error!!");

@@ -1,6 +1,8 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 3px;
 }
 
 body {
@@ -29,12 +31,125 @@ body {
     text-shadow: 6px 6px 6px black;
 }
 
+#closeButton {
+    width: 10%;
+    height: 60%;
+    z-index: 100;
+}
+
+.closeButton button {
+    width: 100%;
+    height: 100%;
+    background: #101214;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 10px;
+    font-size: 0.6em;
+    letter-spacing: 3px;
+    box-shadow: 1px 1px 1px black;
+    border-width: 1.5px;
+}
+
+.closeButton button:focus{
+	outline: 0px;
+}
+
+#players {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
 #players h3 {
     color: #d9d3d3;
     font-family: 'Roboto', sans-serif;
     letter-spacing: 3px;
     text-shadow: 6px 6px 6px black;
     margin-top: 0px;
+}
+
+#winner,
+#loser {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+#loser h2 {
+    transition: 2s all;
+    color: black;
+    font-weight: 900;
+    text-shadow: 2px 2px 2px #202020;
+}
+
+#winner h2 {
+    transition: 2s all;
+    color: black;
+    font-weight: 900;
+    text-shadow: 2px 2px 2px #202020;
+}
+
+.youlose {
+    transition: 2s all;
+    transform: scale(5);
+}
+
+#puny {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9;
+    overflow: hidden;
+}
+
+.imagepuny {
+    transition: 3s all;
+    -webkit-filter: drop-shadow(10px 10px 10px black);
+    filter: drop-shadow(10px 10px 10px black);
+    transform: scale(0) rotate(360deg);
+}
+
+.losepuny {
+    transition: 3s all;
+    width: auto;
+    height: auto;
+    transform: scale(1) rotate(0deg)
+}
+
+#victory {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9;
+    overflow: hidden;
+}
+
+.imagevictory {
+    transition: 3s all;
+    -webkit-filter: drop-shadow(10px 10px 10px black);
+    filter: drop-shadow(10px 10px 10px black);
+    transform: scale(0);
+}
+
+.winvictory {
+    transition: 3s all;
+    width: auto;
+    height: auto;
+    transform: scale(.6);
 }
 
 #tables {
@@ -250,10 +365,10 @@ table {
     justify-content: center;
     align-items: center;
     align-content: center;
-    
+
 }
 
-.roundShip img{
+.roundShip img {
     width: 40%;
     height: 40%;
 }
@@ -435,6 +550,7 @@ table {
     justify-content: center;
     align-content: center;
     align-items: center;
+    z-index: 100;
 }
 
 #logoutImg {

@@ -60,23 +60,32 @@ $(document).ready(function () {
             if (data.gamePlayers[0].id == gp) {
                 document.getElementById('game').innerHTML = "GAME " + data.id;
                 var newElement = document.createElement('h3');
-                newElement.innerHTML = data.gamePlayers[0].player.userName + " (you) vs " + data.gamePlayers[1].player.userName;
-                document.getElementById('players').appendChild(newElement);
+                newElement.innerHTML = data.gamePlayers[0].player.userName;
+                document.getElementById('player2').appendChild(newElement);
+                var newElement2 = document.createElement('h3');
+                newElement2.innerHTML = data.gamePlayers[1].player.userName;
+                document.getElementById('player1').appendChild(newElement2);
                 playerId = data.gamePlayers[0].player.id;
                 opponentId = data.gamePlayers[1].player.id;
             } else {
                 document.getElementById('game').innerHTML = "GAME " + data.id;
                 var newElement = document.createElement('h3');
-                newElement.innerHTML = data.gamePlayers[0].player.userName + " vs " + data.gamePlayers[1].player.userName + " (you)";
-                document.getElementById('players').appendChild(newElement);
+                newElement.innerHTML = data.gamePlayers[1].player.userName;
+                document.getElementById('player2').appendChild(newElement);
+                var newElement2 = document.createElement('h3');
+                newElement2.innerHTML = data.gamePlayers[0].player.userName;
+                document.getElementById('player1').appendChild(newElement2);
                 playerId = data.gamePlayers[1].player.id;
                 opponentId = data.gamePlayers[0].player.id;
             }
         } else {
             document.getElementById('game').innerHTML = "GAME " + data.id;
             var newElement = document.createElement('h3');
-            newElement.innerHTML = data.gamePlayers[0].player.userName + " (you) vs nobody"
-            document.getElementById('players').appendChild(newElement);
+            newElement.innerHTML = data.gamePlayers[0].player.userName;
+            document.getElementById('player2').appendChild(newElement);
+            var newElement2 = document.createElement('h3');
+            newElement2.innerHTML = "Waiting for the opponent";
+            document.getElementById('player1').appendChild(newElement2);
             playerId = data.gamePlayers[0].player.id;
         }
         var ships = data.ships
@@ -247,34 +256,47 @@ $(document).ready(function () {
             $('#table1').show();
             $('#table2').hide();
             $('#table3').show();
-        } else if (data.state == "winner") {
-            $('#table1').hide();
-            $('#table2').hide();
-            $('#table3').hide();
-            //            $.post("/api/game/" + gameId + "/scores", {
-            //                    score: 3
-            //                }).done(function () {
-            //
-            //                })
-            //                .fail(function () {
-            //
-            //                });
+            $('#players').hide();
         } else if (data.state == "losser") {
-            $('#table1').hide();
-            $('#table2').hide();
-            $('#table3').hide();
-            //            $.post("/api/game/" + gameId + "/scores", {
-            //                    score: 0
-            //                }).done(function () {
-            //
-            //                })
-            //                .fail(function () {
-            //
-            //                });
+            $('#table1').fadeOut(1000);
+            $('#table2').fadeOut(1000);
+            $('#table3').fadeOut(1000);
+            $('#players').fadeOut(1000);
+            $('#game').fadeOut(1000);
+            setTimeout(function () {
+                $("#loser").fadeIn(1500);
+                $("#youlose").addClass("youlose");
+            }, 400);
+            setTimeout(function () {
+                $("#puny").fadeIn(1500);
+                $(".imagepuny").addClass("losepuny");
+            }, 1200);
+            setTimeout(function () {
+                $("#youlose").addClass("animated pulse infinite");
+            }, 3000);
+
+        } else if (data.state == "winner") {
+            $('#table1').fadeOut(1000);
+            $('#table2').fadeOut(1000);
+            $('#table3').fadeOut(1000);
+            $('#players').fadeOut(1000);
+            $('#game').fadeOut(1000);
+            setTimeout(function () {
+                $("#winner").fadeIn(1500);
+                $("#youwin").addClass("youlose");
+            }, 400);
+            setTimeout(function () {
+                $("#victory").fadeIn(1500);
+                $(".imagevictory").addClass("winvictory");
+            }, 1200);
+            setTimeout(function () {
+                $("#youwin").addClass("animated pulse infinite");
+            }, 3000);
         } else {
             $('#table1').show();
             $('#table2').show();
             $('#table3').hide();
+            $('#players').show();
         }
     });
 });
@@ -295,6 +317,9 @@ $(document).ready(function () {
                 window.alert("Logged out!!")
                 window.close();
             });
+    });
+    $("#closeButton").click(function () {
+        window.close();
     });
 });
 
