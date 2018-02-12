@@ -23,12 +23,23 @@ body {
 
 #content h1 {
     margin-top: 0px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     color: #d9d3d3;
     font-family: 'Roboto', sans-serif;
     letter-spacing: 3px;
     font-size: 2em;
     text-shadow: 6px 6px 6px black;
+}
+
+#gameStatus {
+    margin-top: 0px;
+    margin-bottom: 20px;
+    color: #d9d3d3;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 3px;
+    font-size: 1em;
+    text-shadow: 6px 6px 6px black;
+    animation: flash 2.5s infinite;
 }
 
 #closeButton {
@@ -54,14 +65,11 @@ body {
 	outline: 0px;
 }
 
-#players {
-    width: 90%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+#player1, #player2 {
+text-align: center;
 }
 
-#players h3 {
+#player1 h3, #player2 h3 {
     color: #d9d3d3;
     font-family: 'Roboto', sans-serif;
     letter-spacing: 3px;
@@ -569,7 +577,6 @@ table {
 
 #table4 {
     width: 555.2px;
-    height: 610.89px;
     display: flex;
     justify-content: center;
     align-content: center;

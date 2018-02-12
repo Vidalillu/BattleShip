@@ -84,7 +84,7 @@ $(document).ready(function () {
             newElement.innerHTML = data.gamePlayers[0].player.userName;
             document.getElementById('player2').appendChild(newElement);
             var newElement2 = document.createElement('h3');
-            newElement2.innerHTML = "Waiting for the opponent";
+            newElement2.innerHTML = "Waiting for opponent";
             document.getElementById('player1').appendChild(newElement2);
             playerId = data.gamePlayers[0].player.id;
         }
@@ -253,15 +253,34 @@ $(document).ready(function () {
     $.getJSON("../api/game_view/" + gp, function (data) {
         var gameId = data.id;
         if (data.state == "placeShips") {
+            document.getElementById('gameStatus').innerHTML = "You can place your Ships";
             $('#table1').show();
             $('#table2').hide();
             $('#table3').show();
-            $('#players').hide();
+        } else if (data.state == "wait_opponent") {
+            document.getElementById('gameStatus').innerHTML = "Waiting for opponent";
+            $('#table1').show();
+            $('#table2').show();
+            $('#table3').hide();
+        } else if (data.state == "wait_ships") {
+            document.getElementById('gameStatus').innerHTML = "Waiting for opponent ships";
+            $('#table1').show();
+            $('#table2').show();
+            $('#table3').hide();
+        } else if (data.state == "shot") {
+            document.getElementById('gameStatus').innerHTML = "You can Shot";
+            $('#table1').show();
+            $('#table2').show();
+            $('#table3').hide();
+        } else if (data.state == "wait_shot") {
+            document.getElementById('gameStatus').innerHTML = "Waiting for opponent shots";
+            $('#table1').show();
+            $('#table2').show();
+            $('#table3').hide();
         } else if (data.state == "losser") {
             $('#table1').fadeOut(1000);
             $('#table2').fadeOut(1000);
             $('#table3').fadeOut(1000);
-            $('#players').fadeOut(1000);
             $('#game').fadeOut(1000);
             setTimeout(function () {
                 $("#loser").fadeIn(1500);
@@ -279,7 +298,6 @@ $(document).ready(function () {
             $('#table1').fadeOut(1000);
             $('#table2').fadeOut(1000);
             $('#table3').fadeOut(1000);
-            $('#players').fadeOut(1000);
             $('#game').fadeOut(1000);
             setTimeout(function () {
                 $("#winner").fadeIn(1500);
@@ -296,7 +314,6 @@ $(document).ready(function () {
             $('#table1').show();
             $('#table2').show();
             $('#table3').hide();
-            $('#players').show();
         }
     });
 });
@@ -559,7 +576,7 @@ function shoting(td) {
                 $(td.firstChild).remove();
                 $(".shotButton").find("button").css("background-color", "grey");
             }
-        } else if (data.state == "wait") {
+        } else if (data.state == "wait_shot") {
             return false;
         }
     });

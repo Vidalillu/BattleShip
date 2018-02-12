@@ -356,16 +356,16 @@ public class SalvoController {
                 state = "placeShips";
             }
             if (!ownergamePlayer.getShips().isEmpty() && gameplayer == enemy){
-                state = "wait";
+                state = "wait_opponent";
             }
             if (!ownergamePlayer.getShips().isEmpty() && joinergamePlayer.getShips().isEmpty()) {
-                state = "wait";
+                state = "wait_ships";
             }
             if (gameplayer != enemy && !ownergamePlayer.getShips().isEmpty() && !joinergamePlayer.getShips().isEmpty() && (joinergamePlayer.getSalvos().size() > ownergamePlayer.getSalvos().size())) {
                 state = "shot";
             }
-            if (!ownergamePlayer.getShips().isEmpty() && !joinergamePlayer.getShips().isEmpty() && joinergamePlayer.getSalvos().size() == ownergamePlayer.getSalvos().size()) {
-                state = "wait";
+            if (gameplayer != enemy && !ownergamePlayer.getShips().isEmpty() && !joinergamePlayer.getShips().isEmpty() && joinergamePlayer.getSalvos().size() == ownergamePlayer.getSalvos().size()) {
+                state = "wait_shot";
             }
             if (opponnentshipSunks(opponentShips) == 5){
                 Score winner = new Score(ownergamePlayer.getPlayer(), ownergamePlayer.getGame(), 3,new Date());
@@ -389,10 +389,10 @@ public class SalvoController {
                 state = "placeShips";
             }
             if (!joinergamePlayer.getShips().isEmpty() && ownergamePlayer.getShips().isEmpty()) {
-                state = "wait";
+                state = "wait_ships";
             }
             if (!ownergamePlayer.getShips().isEmpty() && !joinergamePlayer.getShips().isEmpty() && joinergamePlayer.getSalvos().size() > ownergamePlayer.getSalvos().size()) {
-                state = "wait";
+                state = "wait_shot";
             }
             if (!ownergamePlayer.getShips().isEmpty() && !joinergamePlayer.getShips().isEmpty() && joinergamePlayer.getSalvos().size() == ownergamePlayer.getSalvos().size()) {
                 state = "shot";
