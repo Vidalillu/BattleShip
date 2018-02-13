@@ -352,11 +352,11 @@ $(document).ready(function () {
         $.post("/api/logout")
             .done(function () {
                 window.alert("Logged out!!")
-                window.close();
+                location.href ="../web/games.html";
             });
     });
-    $("#closeButton").click(function () {
-        window.close();
+    $("#backButton").click(function () {
+        location.href ="../web/games.html";
     });
 });
 

@@ -1,14 +1,17 @@
 $(document).ready(function () {
-    var previous = null;
-    var current = null;
+    var previousGame = null;
+    var currentGame = null;
+    var previousgamePlayer = null;
+    var currentgamePlayer = null;
     setInterval(function () {
         $.getJSON("../api/games", function (json) {
-            current = JSON.stringify(json);
-            if (previous && current && previous !== current) {
-                console.log('refresh');
-                
+            currentGame = newGame(json);
+            currentgamePlayer = newgamePlayer(json);
+            if ((previousGame && currentGame && previousGame !== currentGame) || (previousgamePlayer && currentgamePlayer && previousgamePlayer !== currentgamePlayer)) {
+                location.reload();
             }
-            previous = current;
+            previousGame = currentGame;
+            previousgamePlayer = currentgamePlayer;
         });
     }, 2000);
     $.getJSON("../api/games", function (data) {
@@ -30,13 +33,13 @@ $(document).ready(function () {
                         var newElement = document.createElement('tr');
                         var milliseconds = games[i].created;
                         var myDate = new Date(milliseconds);
-                        newElement.innerHTML = "<td>" + myDate.toLocaleString() + "</td>" + "<td>" + games[i].gamePlayers[0].player.userName + "</td>" + "<td>" + games[i].gamePlayers[0].score + "</td>" + "<td>" + games[i].gamePlayers[1].player.userName + "</td>" + "<td>" + games[i].gamePlayers[1].score + "</td>" + '<td><a class="gameButton" href="game.html?gp=' + games[i].gamePlayers[0].id + '" target="_blank"><button>CONTINUE</button></a></td>';
+                        newElement.innerHTML = "<td>" + myDate.toLocaleString() + "</td>" + "<td>" + games[i].gamePlayers[0].player.userName + "</td>" + "<td>" + games[i].gamePlayers[0].score + "</td>" + "<td>" + games[i].gamePlayers[1].player.userName + "</td>" + "<td>" + games[i].gamePlayers[1].score + "</td>" + '<td><a class="gameButton" href="game.html?gp=' + games[i].gamePlayers[0].id + '"><button>CONTINUE</button></a></td>';
                         document.getElementById('board').appendChild(newElement);
                     } else {
                         var newElement = document.createElement('tr');
                         var milliseconds = games[i].created;
                         var myDate = new Date(milliseconds);
-                        newElement.innerHTML = "<td>" + myDate.toLocaleString() + "</td>" + "<td>" + games[i].gamePlayers[0].player.userName + "</td>" + "<td>" + "</td>" + "<td>" + games[i].gamePlayers[1].player.userName + "</td>" + "<td>" + "</td>" + '<td><a class="gameButton" href="game.html?gp=' + games[i].gamePlayers[0].id + '" target="_blank"><button>CONTINUE</button></a></td>';
+                        newElement.innerHTML = "<td>" + myDate.toLocaleString() + "</td>" + "<td>" + games[i].gamePlayers[0].player.userName + "</td>" + "<td>" + "</td>" + "<td>" + games[i].gamePlayers[1].player.userName + "</td>" + "<td>" + "</td>" + '<td><a class="gameButton" href="game.html?gp=' + games[i].gamePlayers[0].id + '"><button>CONTINUE</button></a></td>';
                         document.getElementById('board').appendChild(newElement);
                     }
                 } else if (data.player != null && (games[i].gamePlayers[1].player.userName == data.player.userName)) {
@@ -44,13 +47,13 @@ $(document).ready(function () {
                         var newElement = document.createElement('tr');
                         var milliseconds = games[i].created;
                         var myDate = new Date(milliseconds);
-                        newElement.innerHTML = "<td>" + myDate.toLocaleString() + "</td>" + "<td>" + games[i].gamePlayers[0].player.userName + "</td>" + "<td>" + games[i].gamePlayers[0].score + "</td>" + "<td>" + games[i].gamePlayers[1].player.userName + "</td>" + "<td>" + games[i].gamePlayers[1].score + "</td>" + '<td><a class="gameButton" href="game.html?gp=' + games[i].gamePlayers[1].id + '" target="_blank"><button>CONTINUE</button></a></td>';
+                        newElement.innerHTML = "<td>" + myDate.toLocaleString() + "</td>" + "<td>" + games[i].gamePlayers[0].player.userName + "</td>" + "<td>" + games[i].gamePlayers[0].score + "</td>" + "<td>" + games[i].gamePlayers[1].player.userName + "</td>" + "<td>" + games[i].gamePlayers[1].score + "</td>" + '<td><a class="gameButton" href="game.html?gp=' + games[i].gamePlayers[1].id + '"><button>CONTINUE</button></a></td>';
                         document.getElementById('board').appendChild(newElement);
                     } else {
                         var newElement = document.createElement('tr');
                         var milliseconds = games[i].created;
                         var myDate = new Date(milliseconds);
-                        newElement.innerHTML = "<td>" + myDate.toLocaleString() + "</td>" + "<td>" + games[i].gamePlayers[0].player.userName + "</td>" + "<td>" + "</td>" + "<td>" + games[i].gamePlayers[1].player.userName + "</td>" + "<td>" + "</td>" + '<td><a class="gameButton" href="game.html?gp=' + games[i].gamePlayers[1].id + '" target="_blank"><button>CONTINUE</button></a></td>';
+                        newElement.innerHTML = "<td>" + myDate.toLocaleString() + "</td>" + "<td>" + games[i].gamePlayers[0].player.userName + "</td>" + "<td>" + "</td>" + "<td>" + games[i].gamePlayers[1].player.userName + "</td>" + "<td>" + "</td>" + '<td><a class="gameButton" href="game.html?gp=' + games[i].gamePlayers[1].id + '"><button>CONTINUE</button></a></td>';
                         document.getElementById('board').appendChild(newElement);
                     }
                 } else {
@@ -73,7 +76,7 @@ $(document).ready(function () {
                     var newElement = document.createElement('tr');
                     var milliseconds = games[i].created;
                     var myDate = new Date(milliseconds);
-                    newElement.innerHTML = "<td>" + myDate.toLocaleString() + "</td>" + "<td>" + games[i].gamePlayers[0].player.userName + "</td>" + "<td>" + "</td>" + "<td>" + "</td>" + "<td>" + "</td>" + '<td><a class="gameButton" href="game.html?gp=' + games[i].gamePlayers[0].id + '" target="_blank"><button>CONTINUE</button></a></td>';
+                    newElement.innerHTML = "<td>" + myDate.toLocaleString() + "</td>" + "<td>" + games[i].gamePlayers[0].player.userName + "</td>" + "<td>" + "</td>" + "<td>" + "</td>" + "<td>" + "</td>" + '<td><a class="gameButton" href="game.html?gp=' + games[i].gamePlayers[0].id + '"><button>CONTINUE</button></a></td>';
                     document.getElementById('board').appendChild(newElement);
                 } else if (data.player != null && (games[i].gamePlayers[0].player.userName != data.player.userName)) {
                     var newElement = document.createElement('tr');
@@ -85,8 +88,7 @@ $(document).ready(function () {
                         $.post("/api/game/" + games[i].id + "/players")
                             .done(function () {
                                 window.alert("Join Succesfull!!");
-                                window.open("game.html?gp=" + biggestId(data));
-                                location.reload();
+                                location.href = "game.html?gp=" + biggestId(data);
                             })
                             .fail(function () {
                                 window.alert("Join error!!");
@@ -175,8 +177,7 @@ $(document).ready(function () {
             $.post("/api/games")
                 .done(function () {
                     window.alert("New Game created!!")
-                    window.open("game.html?gp=" + biggestId(data));
-                    location.reload();
+                    location.href = "game.html?gp=" + biggestId(data);
                 })
                 .fail(function () {
                     window.alert("Registration error!!");
@@ -197,5 +198,29 @@ function biggestId(data) {
         }
     }
     biggest = biggest + 1;
+    return biggest;
+}
+
+function newGame(json) {
+    var biggest = json.games[0].id;
+    for (var i = 0; i < json.games.length; i++) {
+        if (json.games[i].id > biggest) {
+            biggest = json.games[i].id;
+        }
+    }
+    console.log(biggest);
+    return biggest;
+}
+
+function newgamePlayer(json) {
+    var biggest = json.games[0].gamePlayers[0].id;
+    for (var i = 0; i < json.games.length; i++) {
+        for (var j = 0; j < json.games[i].gamePlayers.length; j++) {
+            if (json.games[i].gamePlayers[j].id > biggest) {
+                biggest = json.games[i].gamePlayers[j].id;
+            }
+        }
+    }
+    console.log(biggest);
     return biggest;
 }
