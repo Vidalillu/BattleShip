@@ -378,10 +378,10 @@ public class SalvoController {
                 state = "winner";
             }
             if (!ownergamePlayer.getShips().isEmpty() && !joinergamePlayer.getShips().isEmpty() && opponentSalvos.containsAll(gameplayerShips)){
-                state = "losser";
+                state = "loser";
             }
             if(ownergamePlayer.getScore() != null && ownergamePlayer.getScore().getScore() == 0) {
-                state = "losser";
+                state = "loser";
             }
         }
         if (gameplayer != enemy && joinergamePlayer == gameplayer) {
@@ -408,10 +408,10 @@ public class SalvoController {
                 state = "winner";
             }
             if (!ownergamePlayer.getShips().isEmpty() && !joinergamePlayer.getShips().isEmpty() && opponentSalvos.containsAll(gameplayerShips)){
-                state = "losser";
+                state = "loser";
             }
             if(joinergamePlayer.getScore() != null && joinergamePlayer.getScore().getScore() == 0) {
-                state = "losser";
+                state = "loser";
             }
         }
         return state;

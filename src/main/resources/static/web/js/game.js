@@ -55,6 +55,26 @@ function getParameterByName(name, url) {
 
 $(document).ready(function () {
     var gp = getParameterByName('gp');
+    var previous = null;
+    var current = null;
+    setInterval(function () {
+        $.getJSON("../api/game_view/" + gp, function (json) {
+            current = JSON.stringify(json);
+            if (previous && current && previous !== current) {
+                if (document.getElementById('gameStatus').innerHTML == "Waiting for opponent shots" && json.state == "shot") {
+                    location.reload();
+                } else if (document.getElementById('gameStatus').innerHTML == "Waiting for opponent" && json.state == "wait_ships") {
+                    location.reload();
+                } else if (document.getElementById('gameStatus').innerHTML == "Waiting for opponent ships" && json.state == "wait_shot") {
+                    location.reload();
+                } else if (document.getElementById('gameStatus').innerHTML == "Waiting for opponent shots" && json.state == "loser") {
+                    location.reload();
+                }
+
+            }
+            previous = current;
+        });
+    }, 2000);
     $.getJSON("../api/game_view/" + gp, function (data) {
         if (data.gamePlayers[1] != null) {
             if (data.gamePlayers[0].id == gp) {
@@ -277,7 +297,7 @@ $(document).ready(function () {
             $('#table1').show();
             $('#table2').show();
             $('#table3').hide();
-        } else if (data.state == "losser") {
+        } else if (data.state == "loser") {
             $('#table1').fadeOut(1000);
             $('#table2').fadeOut(1000);
             $('#table3').fadeOut(1000);
