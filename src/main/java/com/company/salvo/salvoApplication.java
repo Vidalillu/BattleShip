@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.hibernate.validator.constraints.Email;
 
 
 @SpringBootApplication
@@ -42,11 +43,11 @@ public class salvoApplication {
 
 		return (args) -> {
 			// save a couple of customers
-			Player player1 = new Player("c.obrian@ctu.gov", "42");
-			Player player2 = new Player("j.bauer@ctu.gov", "24");
-			Player player3 = new Player("kim_bauer@gmail.com", "kb");
-			Player player4 = new Player("t.almeida@ctu.gov", "mole");
-			Player player5 = new Player("vidalillu@gmail.com", "2515");
+			Player player1 = new Player("cobrian","c.obrian@ctu.gov", "42");
+			Player player2 = new Player("jbauer", "j.bauer@ctu.gov", "24");
+			Player player3 = new Player("kbauer","kim_bauer@gmail.com", "kb");
+			Player player4 = new Player("talmeida","t.almeida@ctu.gov", "mole");
+			Player player5 = new Player("vidalillu","vidalillu@gmail.com", "2515");
 
 			Game game1 = new Game(new Date());
 			Game game2 = new Game(new Date(System.currentTimeMillis() + 3600 * 1000));

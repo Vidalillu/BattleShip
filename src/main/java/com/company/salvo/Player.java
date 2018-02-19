@@ -1,6 +1,7 @@
 package com.company.salvo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.Email;
 
 import java.util.*;
 import javax.persistence.Entity;
@@ -19,6 +20,7 @@ public class Player {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
     private String userName;
+    private String email;
     private String password;
 
     @OneToMany(mappedBy="player", fetch=FetchType.EAGER)
@@ -39,8 +41,9 @@ public class Player {
 
     public Player() { }
 
-    public Player(String user, String pass) {
+    public Player(String user, String mail, String pass) {
         userName = user;
+        email = mail;
         password = pass;
     }
 
@@ -50,6 +53,14 @@ public class Player {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public long getId() {

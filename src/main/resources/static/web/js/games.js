@@ -108,7 +108,7 @@ $(document).ready(function () {
             "paging": false,
             "scrollX": false,
             "info": false,
-            "order": [[3, "desc"]]
+            "order": [[3, "desc"]],
         });
     });
     $.getJSON("../api/leaderboard", function (data) {
@@ -137,7 +137,6 @@ $(document).ready(function () {
                 password: password
             })
             .done(function () {
-                window.alert("Logged in!!")
                 location.reload();
             })
             .fail(function () {
@@ -155,10 +154,12 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $("#registerBtn").click(function () {
-        var usuario = document.register.newemail.value;
+        var usuario = document.register.name.value;
+        var correo = document.register.newemail.value;
         var password = document.register.newpwd.value;
         $.post("/api/players", {
                 userName: usuario,
+                email: correo,
                 password: password
             })
             .done(function () {

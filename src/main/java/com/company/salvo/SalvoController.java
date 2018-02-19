@@ -25,7 +25,7 @@ public class SalvoController {
     private PlayerRepository playerrepo;
 
     @RequestMapping(path = "/players", method = RequestMethod.POST)
-    public ResponseEntity<String> createUser(@RequestParam String userName, @RequestParam String password) {
+    public ResponseEntity<String> createUser(@RequestParam String userName, @RequestParam String email, @RequestParam String password) {
         if (userName.isEmpty()) {
             return new ResponseEntity<>("No name given", HttpStatus.FORBIDDEN);
         }
@@ -35,7 +35,7 @@ public class SalvoController {
             return new ResponseEntity<>("Name already used", HttpStatus.CONFLICT);
         }
 
-        playerrepo.save(new Player(userName, password));
+        playerrepo.save(new Player(userName, email, password));
         return new ResponseEntity<>("Named added", HttpStatus.CREATED);
     }
 
